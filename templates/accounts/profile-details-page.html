@@ -1,0 +1,105 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block page_content %}
+    <!-- Start Profile Details Section -->
+    <div class="profile">
+
+        <!-- Start Profile Personal Data Section -->
+        <div class="profile-data">
+            <div class="profile_img">
+                <div class="image">
+
+                    <!-- Profile Image -->
+                    <img src="{% static 'images/person.png' %}" alt="img8">
+                </div>
+            </div>
+            <div class="personal">
+                <div class="edit">
+                    {#                   {% if full_name is not None %}#}
+                    <p>{{ object.username }}</p>
+                    {#                   {% else %}#}
+                    {#                       <p>{{ full_name }}</p>#}
+                    {#                    {%  endif %}#}
+                    <!-- IF the viewer is the owner of the profile -->
+                    <!-- Link to Edit Profile Page -->
+                    {% if is_owner %}
+                        <a href="{% url 'profile edit' pk=object.pk %}">
+                            <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
+                        </a>
+
+                        <!-- Link to Delete Profile Page -->
+                        <a href="{% url 'profile delete' pk=object.pk %}">
+                            <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
+                        </a>
+                        <!-- End IF the viewer is the owner of the profile -->
+                    {% endif %}
+                </div>
+                <div class="data">
+
+                    <!-- Total Number of Photos by the User -->
+                    <span>{{ photos_count }}</span>
+                    <p>photos</p>
+
+                    <!-- Total Number of Pets owned by the User -->
+                    <span>{{ pets_count }}</span>
+                    <p>pets</p>
+
+                    <!-- Total Number of Likes for the User -->
+                    <span>{{ likes_count }}</span>
+                    <p>likes</p>
+                </div>
+                {% if object.first_name and object.last_name %}
+                    <h3 class="names">{{ full_name }}</h3>
+                {% endif %}
+                <!-- User Email Address -->
+                <p class="email">{{ object.email }}</p>
+
+                {% if gender %}
+                    <p class="gender">{{ gender }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End Profile Personal Data Section -->
+
+        <!-- Start Pets Data Section -->
+        <div class="pets">
+            <div class="statuses">
+
+                <!-- Start 1st Pet Details Page -->
+                <!-- Link to First Pet Details Page -->
+                {% for pet in pets %}
+                    <a href="{% url 'pet details' username=object.username pet_slug=pet.slug %}">
+                        <div class="head-pet">
+                            <div class="status">
+                                <div class="image">
+                                    <!-- Pet Image -->
+                                    <img src="{{ pet.personal_photo }}"
+                                         alt="{{ pet.name }}">
+                                </div>
+                            </div>
+                            <!-- Pet Name -->
+                            <p>{{ pet.name }}</p>
+                        </div>
+                    </a>
+                {% endfor %}
+
+
+
+                <!-- End Last Uploaded Photos Section -->
+
+            </div>
+            {% for photo in photos %}
+                <div class="pet-photos">
+
+                    <!-- Link to Last Uploaded Pet Photo -->
+                    <a href="{% url 'photo details' pk=photo.pk %}">
+                        <!-- Pet Photo -->
+                        <img src="{{ photo.photo.url }}"
+                             alt="{{ photo.description }}"/>
+                    </a>
+
+
+                </div>
+            {% endfor %}
+            <!-- End Profile Details Section -->
+{% endblock %}
