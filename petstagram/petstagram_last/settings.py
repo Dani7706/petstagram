@@ -26,6 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(os.environ.get("DEBUG"))
 
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
+# ALLOWED_HOSTS =[]
 print(f'SK: {SECRET_KEY}')
 print(f'Debug: {DEBUG}')
 print(f'AH: {ALLOWED_HOSTS}')
@@ -132,7 +133,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS=[
 BASE_DIR/'staticfiles'
 ]
-
+STATIC_ROOT= '/tmp/petstagram/staticfiles'
 MEDIA_URL='/media/'
 
 MEDIA_ROOT = BASE_DIR / 'mediafiles/'
